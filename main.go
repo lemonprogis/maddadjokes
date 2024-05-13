@@ -19,6 +19,10 @@ type Joke struct {
 	A string `json:"a"`
 }
 
+type Halthcheck struct {
+	Status string `json:status`
+}
+
 func loadData() Data {
 	jsonFile, err := os.Open("data/jokes.json")
 	if err != nil {
@@ -45,9 +49,17 @@ func getJoke(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, joke)
 }
 
+func healthCheck(c *gin.Context) {
+	ok := Halthcheck{
+		Status: "ok",
+	}
+	c.IndentedJSON(http.StatusOK, ok)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/maddadjokes", getJoke)
+	router.GET("/health", healthCheck)
 
 	err := router.Run("0.0.0.0:8080")
 	if err != nil {

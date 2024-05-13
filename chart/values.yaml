@@ -1,0 +1,24 @@
+replicaCount: 2
+
+imageName: lemonpro/maddadjokes
+imageTag: beta
+imagePullPolicy: Always
+
+containerPort: 8080
+
+contextPath: "/"
+
+configs:
+  GIN_MODE: release
+
+resources:
+  requests:
+    memory: "500Mi"
+    cpu: "250m"
+  limits:
+    memory: "750Mi"
+    cpu: "500m"
+
+startupFailureThreshold: 10
+livenessFailureThreshold: 10
+readinessFailureThreshold: 10
