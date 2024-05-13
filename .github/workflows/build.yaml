@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub Container Registry
+        run: echo $DOCKER_HUB_TOKEN | docker login -u lemonpro --password-stdin
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Multi-stage docker build
+        run: |
+          docker build -t maddadjokes:1.0.0-SNAPSHOT .
+
+      - name: Tag & push to DockerHub Registry
+        run: |
+          docker tag maddadjokes:1.0.0-SNAPSHOT index.docker.io/lemonpro/maddadjokes:$GITHUB_SHA
+          docker push index.docker.io/lemonpro/maddadjokes:$GITHUB_SHA
