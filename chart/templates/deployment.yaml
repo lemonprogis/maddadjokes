@@ -31,12 +31,12 @@ spec:
                 name: {{ .Chart.Name }}
           livenessProbe:
             httpGet:
-              path: "{{ .Values.contextPath }}health"
+              path: "{{ .Values.contextPath }}/health"
               port: http
             failureThreshold: {{ .Values.livenessFailureThreshold }}
           readinessProbe:
             httpGet:
-              path: "{{ .Values.contextPath }}health/"
+              path: "{{ .Values.contextPath }}/health"
               port: http
             failureThreshold: {{ .Values.readinessFailureThreshold }}
           ports:

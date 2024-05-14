@@ -55,7 +55,7 @@ func getSlackJoke(c *gin.Context) {
 	val := fmt.Sprintf("*%s*\n\t%s", joke.Q, joke.A)
 
 	c.IndentedJSON(http.StatusOK, map[string]any{
-		"type": "mrkdwn", "text": val})
+		"response_type": "in_channel", "type": "mrkdwn", "text": val})
 
 }
 
