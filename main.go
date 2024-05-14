@@ -19,8 +19,8 @@ type Joke struct {
 	A string `json:"a"`
 }
 
-type Halthcheck struct {
-	Status string `json:status`
+type Healthcheck struct {
+	Status string `json:"status"`
 }
 
 func loadData() Data {
@@ -50,7 +50,7 @@ func getJoke(c *gin.Context) {
 }
 
 func healthCheck(c *gin.Context) {
-	ok := Halthcheck{
+	ok := Healthcheck{
 		Status: "ok",
 	}
 	c.IndentedJSON(http.StatusOK, ok)
