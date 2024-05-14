@@ -4,10 +4,10 @@ metadata:
   name: {{ .Chart.Name }}
   namespace: {{ .Release.Namespace }}
   annotations:
-    #cert-manager.io/cluster-issuer: production
+    cert-manager.io/cluster-issuer: production
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
-  ingressClassName: external-nginx
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.ingress.wwwhost }}
       http:
@@ -29,3 +29,5 @@ spec:
                 port:
                   number: {{ .Values.containerPort }}
             pathType: Prefix
+  tls:
+  {{- toYaml .Values.ingress.tls | nindent 4 }}
