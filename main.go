@@ -49,6 +49,16 @@ func getJoke(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, joke)
 }
 
+func getSlackJoke(c *gin.Context) {
+	data := loadData()
+	joke := getRandomJoke(data)
+	val := fmt.Sprintf("*%s*\n\t%s", joke.Q, joke.A)
+
+	c.IndentedJSON(http.StatusOK, map[string]any{
+		"type": "mrkdwn", "text": val})
+
+}
+
 func healthCheck(c *gin.Context) {
 	ok := Healthcheck{
 		Status: "ok",
@@ -59,6 +69,8 @@ func healthCheck(c *gin.Context) {
 func main() {
 	router := gin.Default()
 	router.GET("/maddadjokes", getJoke)
+	router.POST("/maddadjokes/slack", getSlackJoke)
+
 	router.GET("/maddadjokes/health", healthCheck)
 
 	err := router.Run("0.0.0.0:8080")
