@@ -6,18 +6,27 @@ imagePullPolicy: Always
 
 containerPort: 8080
 
-contextPath: "/"
+contextPath: "/maddadjokes"
+
+ingress:
+  host: ejbtechsolutions.com
+  wwwhost: www.ejbtechsolutions.com
+  tls:
+    - hosts:
+        - ejbtechsolutions.com
+        - www.ejbtechsolutions.com
+      secretName: ejbtechsolutions-com
 
 configs:
   GIN_MODE: release
 
 resources:
-  requests:
-    memory: "500Mi"
-    cpu: "250m"
   limits:
-    memory: "750Mi"
     cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
 
 startupFailureThreshold: 10
 livenessFailureThreshold: 10

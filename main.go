@@ -59,7 +59,7 @@ func healthCheck(c *gin.Context) {
 func main() {
 	router := gin.Default()
 	router.GET("/maddadjokes", getJoke)
-	router.GET("/health", healthCheck)
+	router.GET("/maddadjokes/health", healthCheck)
 
 	err := router.Run("0.0.0.0:8080")
 	if err != nil {
