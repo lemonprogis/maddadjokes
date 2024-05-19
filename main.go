@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"math/rand"
@@ -68,9 +69,12 @@ func healthCheck(c *gin.Context) {
 
 func main() {
 	router := gin.Default()
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}
+	router.Use(cors.New(config))
+
 	router.GET("/maddadjokes", getJoke)
 	router.POST("/maddadjokes/slack", getSlackJoke)
-
 	router.GET("/maddadjokes/health", healthCheck)
 
 	err := router.Run("0.0.0.0:8080")
